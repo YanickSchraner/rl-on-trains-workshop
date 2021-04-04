@@ -3,3 +3,5 @@ torch
 gym
 seaborn
 matplotlib
+Pillow
+tqdm

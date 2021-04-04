@@ -3,7 +3,7 @@ from flatland.core.env_observation_builder import ObservationBuilder
 from flatland.core.grid.grid4_utils import get_new_position
 from flatland.envs.agent_utils import RailAgentStatus
 from flatland.envs.rail_env import fast_count_nonzero, fast_argmax
-
+from flatland.utils.ordered_set import OrderedSet
 
 """
 LICENCE for the FastTreeObs Observation Builder
@@ -276,7 +276,11 @@ class FastTreeObs(ObservationBuilder):
                         observation[dir_loop] = int(new_cell_dist < current_cell_dist)
 
                     has_opp_agent, has_same_agent, has_switch, v = self._explore(handle, new_position, branch_direction)
-                    visited.append(v)
+                    
+                    if len(v) == 1:
+                        visited.append(v[0])
+                    else:
+                        visited.append(v)
 
                     observation[10 + dir_loop] = 1
                     observation[14 + dir_loop] = has_opp_agent
