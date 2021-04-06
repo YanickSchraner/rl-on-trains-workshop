@@ -9,6 +9,20 @@ We will use the Flatland railway simulator, developed in collaboration with SBB 
 
 Following this workshop, participants can take part in the other Flatland workshop organized by Deutsche Bahn and InstaDeep, which will introduce the bleeding-edge innovations they have been working on to tackle this problem.
 
+## Agenda
+Tuesday 13th of April, 9:00 - 13:00 CEST 14:00 - 16:00 CEST
+
+* 9 am: Intro to RL
+* 10 am: Intro to the environment
+* 10:30 am: Intro to Q-learning and DQN
+* 12 am: Working on first submissions
+* 2 pm: Curiosity
+* 3 pm: Working on final submissions
+* 4 pm: Wrap Up
+
+## Resources
+The slides and code is available on [GitHub](https://github.com/YanickSchraner/rl-on-trains-workshop)
+
 ## Topic and relevance
 In this tutorial, we will provide an introduction to reinforcement learning, followed by an explanation of one of its fundamental methods: Deep Q-Learning. We will then introduce the concepts of prioritised experience replay (PER) and intrinsic curiosity module (ICM) as extensions to DQN. We will provide Colab notebooks where participants can get familiar with these concepts by solving toy problems.
 
@@ -35,6 +49,11 @@ Participants will discover what reinforcement learning is, what it can do, and w
 
 ### Organisers
 Florian Laurent, ML Engineer, AIcrowd
+
+Manuel Schneider, ETH
+
 Christian Scheller, Research associate, FHNW
-Sharada Mohanty, CEO, AIcrowd
+
 Yanick Schraner, Research assistant, Master student, FHNW
+
+Sharada Mohanty, CEO, AIcrowd
