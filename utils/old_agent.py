@@ -1,173 +1,35 @@
 import random
+from abc import abstractmethod, ABC
 from collections import defaultdict, Counter
-from collections import deque
-
-import gym.spaces as spaces
-import matplotlib.pyplot as plt
-import numpy as np
+from logging import Logger
 import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch import Tensor, LongTensor
+from gym.vector.utils import spaces
+import matplotlib.pyplot as plt
 
-from agents import Agent
-from utils.logging import Logger, NoLogger
+from torch import LongTensor, Tensor
 
 
-class DenseQNetwork(nn.Module):
-    """
-    A dense Q-network for OpenAI Gym Environments
-    The network flattens the obs/action spaces and adds dense layers in between
-    """
-
-    def __init__(self, env, hidden_layers=[]):
-        # Action space and observation spaces should by OpenAI gym spaces
-        isinstance(env.observation_space, spaces.Space), 'Observation space should be an OpenAI Gym space'
-        isinstance(env.action_space, spaces.Discrete), 'Action space should be an OpenAI Gym "Discrete" space'
-
-        # Create network
-        super().__init__()  # Initialize module
-        self.env = env  # Save environment
-
-        self.input_size = spaces.flatdim(self.env.observation_space)
-        self.output_size = self.env.action_space.n
-        self.hidden_layers = hidden_layers
-
-        self.network = nn.Sequential()
-        hidden_layers = hidden_layers + [self.output_size]
-        for i, hidden_size in enumerate(hidden_layers):
-            # Create layer
-            in_features = self.input_size if i == 0 else hidden_layers[i - 1]
-            out_features = hidden_layers[i]
-            layer = nn.Linear(in_features, out_features)
-
-            # Add layer + activation
-            if i > 0:
-                self.network.add_module('dense_act_{}'.format(i), nn.ReLU())
-            self.network.add_module('dense_{}'.format(i + 1), layer)
-
-        # Move network to GPU if available
-        if torch.cuda.is_available():
-            self.network.cuda()
-
-    def forward(self, states):
-        # Forward flattened state
-        states_flattened = [spaces.flatten(self.env.observation_space, s) for s in states]
-        states_tensor = Tensor(states_flattened)
-
-        # Move tensor to GPU if available
-        if torch.cuda.is_available():
-            states_tensor = states_tensor.cuda()
-
-        return self.network(states_tensor)
+class NoLogger(Logger):
+    def log_dict(self, global_step: int, values: dict) -> None:
+        pass
 
 
-class ConvQNetwork(nn.Module):
-    """
-    A convolutional Q-network with conv + dense architecture
-    """
+class Agent(ABC):
 
-    def __init__(self, env, conv_layers=[{'out_channels': 8, 'kernel_size': 3, 'stride': 1, 'padding': 1}], dense_layers=[]):
-        # Action space and observation spaces should by OpenAI gym spaces
-        isinstance(env.observation_space, spaces.Box), 'Observation space should be a OpenAI Gym "Box" 3d space'
-        isinstance(env.action_space, spaces.Discrete), 'Action space should be an OpenAI Gym "Discrete" space'
-        assert len(env.observation_space.shape) == 3, 'Observation space should be a OpenAI Gym "Box" 3d space'
-
-        # Create network
-        super().__init__()  # Initialize module
-        self.env = env  # Save environment
-
-        self.input_shape = env.observation_space.shape
-        self.output_size = self.env.action_space.n
-        self.conv_layers = conv_layers
-        self.dense_layers = dense_layers
-        self.network = nn.Sequential()
-
-        # Convolutional layers
-        for conv_i, conv_kwds in enumerate(self.conv_layers):
-            assert 'out_channels' in conv_kwds, 'You need to define the number of kernels "out_channels" for each conv. layer'
-            assert 'kernel_size' in conv_kwds, 'You need to define the kernel size "kernel_size" for each conv. layer'
-
-            # Create layer
-            in_channels = self.input_shape[-1] if conv_i == 0 else self.conv_layers[conv_i - 1]['out_channels']
-            layer = nn.Conv2d(in_channels, **conv_kwds)
-
-            # Add layer + activation
-            self.network.add_module('conv2d_{}'.format(conv_i + 1), layer)
-            self.network.add_module('conv2d_act_{}'.format(conv_i + 1), nn.ReLU())
-
-        # Flatten
-        self.network.add_module('flatten', nn.Flatten())
-        _, flatsize = self.network(torch.ones([1, self.input_shape[2], self.input_shape[0], self.input_shape[1]])).shape
-
-        # Dense layers
-        dense_layers = self.dense_layers + [self.output_size]
-        for dense_i, dense_layer in enumerate(dense_layers):
-            # Create layer
-            in_features = flatsize if dense_i == 0 else dense_layers[dense_i - 1]
-            out_features = dense_layer
-            layer = nn.Linear(in_features, out_features)
-
-            # Add layer + activation
-            if dense_i > 0:
-                self.network.add_module('dense_act_{}'.format(dense_i), nn.ReLU())
-            self.network.add_module('dense_{}'.format(dense_i + 1), layer)
-
-        # Move network to GPU if available
-        if torch.cuda.is_available():
-            self.network.cuda()
-
-    def forward(self, states):
-        # Forward flattened state
-        batch_states = np.array(states).transpose(0, 3, 1, 2)
-        batch_tensor = Tensor(batch_states)
-
-        # Move tensor to GPU if available
-        if torch.cuda.is_available():
-            batch_tensor = batch_tensor.cuda()
-
-        return self.network(batch_tensor)
-
-
-class DQNFactoryTemplate():
-    """
-    A template class to generate custom Q-networks and their optimizers
-    """
-
-    def create_qnetwork(self, target_qnetwork):
-        # Should return network + optimizer
-        raise NotImplementedError
-
-
-class DenseQNetworkFactory(DQNFactoryTemplate):
-    """
-    A Q-network factory for dense Q-networks
-    """
-
-    def __init__(self, env, hidden_layers=[]):
+    def __init__(self, env):
         self.env = env
-        self.hidden_layers = hidden_layers
 
-    def create_qnetwork(self, target_qnetwork):
-        network = DenseQNetwork(self.env, self.hidden_layers)
-        optimizer = optim.Adam(network.parameters())
-        return network, optimizer
+    @abstractmethod
+    def act(self, state):
+        pass
 
+    @abstractmethod
+    def reset(self):
+        pass
 
-class ConvQNetworkFactory(DQNFactoryTemplate):
-    """
-    A Q-network factory for convolutional Q-networks
-    """
-
-    def __init__(self, env, conv_layers=[], dense_layers=[]):
-        self.env = env
-        self.conv_layers = conv_layers
-        self.dense_layers = dense_layers
-
-    def create_qnetwork(self, target_qnetwork):
-        network = ConvQNetwork(self.env, self.conv_layers, self.dense_layers)
-        optimizer = optim.Adam(network.parameters())
-        return network, optimizer
+    @abstractmethod
+    def learn(self, state, action, reward, next_state, done):
+        pass
 
 
 class DQNAgent(Agent):
@@ -206,10 +68,10 @@ class DQNAgent(Agent):
 
         # Create new replay memory
         self.memory = deque(maxlen=self.memory_size)
-        
+
     def save(self, path):
         torch.save(self.qnetwork, path)
-        
+
     def load(self, path):
         device = torch.device("cuda") if torch.cuda.is_available() else torch.device('cpu')
         self.qnetwork = torch.load(path, map_location=device)
