@@ -2,7 +2,7 @@
 
 Workshop @ TheWebConference 2021
 
-# Links
+## Links
 
 * [Challenge page](https://www.aicrowd.com/challenges/flatland-workshop)
 * [Conference website](https://www2021.thewebconf.org/)
@@ -17,5 +17,5 @@ Workshop @ TheWebConference 2021
 
 ## Notebooks:
 * [02 - Introduction to Flatland](https://colab.research.google.com/github/YanickSchraner/rl-on-trains-workshop/blob/main/01_Intro_to_environment.ipynb#scrollTo=npZGvYgxIYkP)
-* [03 - https://colab.research.google.com/drive/1dL2CkEF-jDegJWSmKjymgURlHF0H41YM?usp=sharing]
+* [03 - Introduction to DQN](https://colab.research.google.com/drive/1dL2CkEF-jDegJWSmKjymgURlHF0H41YM?usp=sharing]
 * [04 - Curiosity](https://colab.research.google.com/github/YanickSchraner/rl-on-trains-workshop/blob/main/04_curiosity.ipynb)
