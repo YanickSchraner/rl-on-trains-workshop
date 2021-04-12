@@ -1,5 +1,7 @@
 # Flatland: Multi-Agent Reinforcement Learning on Trains
 
+![Flatland](assets/flatland.gif)
+
 Workshop @ TheWebConference 2021
 
 ## Links
