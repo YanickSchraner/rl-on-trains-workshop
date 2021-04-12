@@ -8,3 +8,4 @@
 
 ## Notebooks:
 * [01 - Introduction to Flatland](https://colab.research.google.com/github/YanickSchraner/rl-on-trains-workshop/blob/main/01_Intro_to_environment.ipynb#scrollTo=npZGvYgxIYkP)
+* [04 - Curiosity](https://colab.research.google.com/github/YanickSchraner/rl-on-trains-workshop/blob/main/04_curiosity.ipynb)
