@@ -12,6 +12,7 @@ Following this workshop, participants can take part in the other Flatland worksh
 ## Agenda
 Tuesday 13th of April, 9:00 - 12:00 CEST 14:00 - 16:00 CEST
 
+
 | Topic                       | Topic details                                        | Presenter               | Time            | Duration |
 |-----------------------------|------------------------------------------------------|-------------------------|-----------------|----------|
 | Introduction                | Workshop plan, “Go to Zoom”                          | Florian                 | 9:00am 9:05am   | 5min     |
@@ -29,6 +30,8 @@ Tuesday 13th of April, 9:00 - 12:00 CEST 14:00 - 16:00 CEST
 |                             | COMPETITION  (breakout rooms)                        | Everyone                | 2:50pm 3:50pm   | 50min    |
 | AIcrowd pitch               |                                                      | Mohanty                 | 3:50pm 4:00pm   | 10min    |
 | Wrap-up                     | Let winning participants talk about their approaches | Everyone                | 4:00pm 4:10pm   | 10min    |
+
+
 ## Resources
 The slides and code is available on [GitHub](https://github.com/YanickSchraner/rl-on-trains-workshop)
 
