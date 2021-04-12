@@ -10,16 +10,25 @@ We will use the Flatland railway simulator, developed in collaboration with SBB 
 Following this workshop, participants can take part in the other Flatland workshop organized by Deutsche Bahn and InstaDeep, which will introduce the bleeding-edge innovations they have been working on to tackle this problem.
 
 ## Agenda
-Tuesday 13th of April, 9:00 - 13:00 CEST 14:00 - 16:00 CEST
+Tuesday 13th of April, 9:00 - 12:00 CEST 14:00 - 16:00 CEST
 
-* 9 am: Intro to RL
-* 10 am: Intro to the environment
-* 10:30 am: Intro to Q-learning and DQN
-* 12 am: Working on first submissions
-* 2 pm: Curiosity
-* 3 pm: Working on final submissions
-* 4 pm: Wrap Up
-
+| Topic                       | Topic details                                        | Presenter               | Time            | Duration |
+|-----------------------------|------------------------------------------------------|-------------------------|-----------------|----------|
+| Introduction                | Workshop plan, “Go to Zoom”                          | Florian                 | 9:00am 9:05am   | 5min     |
+|                             | What is RL/MARL                                      | Florian                 | 9:05am 9:50am   | 45min    |
+|                             | Story of Flatland                                    | Erik                    | 9:50am 10:00am  | 10min    |
+| Intro to the environment    | Presentation                                         | Yanick                  | 10:00am 10:15am | 15min    |
+|                             | Notebook walkthrough                                 | Yanick                  | 10:15am 10:30am | 15min    |
+| Intro to Q-learning and DQN | Presentation                                         | Yanick                  | 10:30am 11:10am | 40min    |
+|                             | Notebook walkthrough                                 | Florian                 | 11:10am 11:20am | 10min    |
+|                             | Submitting to AIcrowd                                | Florian                 | 11:20am 11:30am | 10min    |
+|                             | COMPETITION (breakout rooms)                         | Everyone  (groups of 5) | 11:30am 12:00pm | 30min    |
+| LUNCH BREAK                 |                                                      |                         | 12:00pm 2:00pm  | 2 hours  |
+| Curiosity                   | Presentation                                         | Christian               | 2:00pm 2:45pm   | 45min    |
+|                             | Notebook walkthrough                                 | Christian               | 2:45pm 2:50pm   | 5min     |
+|                             | COMPETITION  (breakout rooms)                        | Everyone                | 2:50pm 3:50pm   | 50min    |
+| AIcrowd pitch               |                                                      | Mohanty                 | 3:50pm 4:00pm   | 10min    |
+| Wrap-up                     | Let winning participants talk about their approaches | Everyone                | 4:00pm 4:10pm   | 10min    |
 ## Resources
 The slides and code is available on [GitHub](https://github.com/YanickSchraner/rl-on-trains-workshop)
 
