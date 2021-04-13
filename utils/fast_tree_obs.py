@@ -3,25 +3,25 @@ from flatland.core.env_observation_builder import ObservationBuilder
 from flatland.core.grid.grid4_utils import get_new_position
 from flatland.envs.agent_utils import RailAgentStatus
 from flatland.envs.rail_env import fast_count_nonzero, fast_argmax
-from flatland.utils.ordered_set import OrderedSet
 
 """
-LICENCE for the FastTreeObs Observation Builder
+LICENCE for the FastTreeObs Observation Builder  
 
 The observation can be used freely and reused for further submissions. Only the author needs to be referred to
 /mentioned in any submissions - if the entire observation or parts, or the main idea is used.
 
 Author: Adrian Egli (adrian.egli@gmail.com)
 
-[Linkedin](https://www.researchgate.net/profile/Adrian_Egli2)
-[Researchgate](https://www.linkedin.com/in/adrian-egli-733a9544/)
+LinkedIn: https://www.linkedin.com/in/adrian-egli-733a9544/
+ResearchGate: https://www.researchgate.net/profile/Adrian_Egli2
 """
+
 
 class FastTreeObs(ObservationBuilder):
 
     def __init__(self, max_depth):
         self.max_depth = max_depth
-        self.observation_dim = 26
+        self.observation_dim = 26 + 3
 
     def build_data(self):
         if self.env is not None:
@@ -276,11 +276,7 @@ class FastTreeObs(ObservationBuilder):
                         observation[dir_loop] = int(new_cell_dist < current_cell_dist)
 
                     has_opp_agent, has_same_agent, has_switch, v = self._explore(handle, new_position, branch_direction)
-                    
-                    if len(v) == 1:
-                        visited.append(v[0])
-                    else:
-                        visited.append(v)
+                    visited.append(v)
 
                     observation[10 + dir_loop] = 1
                     observation[14 + dir_loop] = has_opp_agent
@@ -296,6 +292,18 @@ class FastTreeObs(ObservationBuilder):
         observation[8] = int(agents_near_to_switch)
         observation[9] = int(agents_near_to_switch_all)
 
+        # XXX
+        nb_active_agents = 0
+        for h in self.env.get_agent_handles():
+            a = self.env.agents[h]
+            if a.status == RailAgentStatus.ACTIVE:
+                nb_active_agents += 1
+
+        observation[26] = handle / self.env.get_num_agents()
+        observation[27] = self.env._elapsed_steps / self.env._max_episode_steps
+        observation[28] = nb_active_agents / self.env.get_num_agents()
+        #observation[26] = self.env.num_resets # DOESNT WORK! TODO check paper
+        # XXX
         self.env.dev_obs_dict.update({handle: visited})
 
         return observation

@@ -1,0 +1,39 @@
+test0:
+  environment:
+    height: 20
+    number_of_agents: 1
+    random_seed: 1
+    width: 20
+  rail_generator:
+    max_num_cities: 2
+    max_rails_between_cities: 1
+    max_rails_in_city: 2
+  scores:
+    always_forward: -0.35
+    random: -0.91
+test1:
+  environment:
+    height: 10
+    number_of_agents: 1
+    random_seed: 7
+    width: 20
+  rail_generator:
+    max_num_cities: 2
+    max_rails_between_cities: 1
+    max_rails_in_city: 2
+  scores:
+    always_forward: -0.48
+    random: -0.6
+test2:
+  environment:
+    height: 10
+    number_of_agents: 2
+    random_seed: 7
+    width: 20
+  rail_generator:
+    max_num_cities: 2
+    max_rails_between_cities: 1
+    max_rails_in_city: 2
+  scores:
+    always_forward: -4.96
+    random: -2.88
