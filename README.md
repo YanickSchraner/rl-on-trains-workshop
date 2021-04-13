@@ -17,6 +17,7 @@ Workshop @ TheWebConference 2021
 * [03 - DQN intro](https://docs.google.com/presentation/d/11aWCW0kl5U-44yHUt_8oU21KmHFHM-785qJVhZbvhkE/edit#slide=id.g7d863decb1_0_52)
 * [04 - Submitting to AIcrowd](https://docs.google.com/presentation/d/1a0WKK_DYjaaV5Vd9IznTg3WOiDU9JuCqiSNkK-7m9UY/edit?usp=sharing)
 * [05 - Curiosity](https://docs.google.com/presentation/d/1ukf4_qOML23j0ddhRjoBzylf_Qdkb1UsaTc43O3Pzmw/edit?ts=604f8341#slide=id.p)
+* [06 - Other challenges on AIcrowd](https://docs.google.com/presentation/d/1S2OArWZuRhrPLJahLP287KHda-0c1REgU-lJs_NWmic/edit?usp=sharing)
 
 ## Notebooks
 * [02 - Introduction to Flatland](https://colab.research.google.com/github/YanickSchraner/rl-on-trains-workshop/blob/main/01_Intro_to_environment.ipynb#scrollTo=npZGvYgxIYkP)
