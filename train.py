@@ -376,6 +376,8 @@ def train_agent(policy_cls: Union[Type[DDDQNPolicy], Type[DDDQNRNDPolicy]], trai
             torch.save(policy.qnetwork_local, checkpoint_path)
             print(f'💾 Checkpoint stored: {checkpoint_path}')
 
+    return policy
+
 
 def test_policy(tester, policy, observation_builder, eps):
     # wrapper function for env testing
