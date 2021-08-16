@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import copy
 from argparse import ArgumentParser, Namespace
 from collections import deque, defaultdict
 from datetime import datetime
@@ -375,8 +376,8 @@ def train_agent(policy_cls: Union[Type[DDDQNPolicy], Type[DDDQNRNDPolicy]], trai
             checkpoint_path = os.path.join(log_dir, 'ckpts', f'ckpt-{episode_idx}.pth')
             torch.save(policy.qnetwork_local, checkpoint_path)
             print(f'💾 Checkpoint stored: {checkpoint_path}')
-
-    return policy
+    print(policy)
+    return copy.deepcopy(policy)
 
 
 def test_policy(tester, policy, observation_builder, eps):
