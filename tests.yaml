@@ -7,7 +7,7 @@ test0:
   rail_generator:
     max_num_cities: 2
     max_rails_between_cities: 1
-    max_rails_in_city: 2
+    max_rail_pairs_in_city: 2
   scores:
     always_forward: -0.35
     random: -0.91
@@ -20,7 +20,7 @@ test1:
   rail_generator:
     max_num_cities: 2
     max_rails_between_cities: 1
-    max_rails_in_city: 2
+    max_rail_pairs_in_city: 2
   scores:
     always_forward: -0.48
     random: -0.6
@@ -33,7 +33,7 @@ test2:
   rail_generator:
     max_num_cities: 2
     max_rails_between_cities: 1
-    max_rails_in_city: 2
+    max_rail_pairs_in_city: 2
   scores:
     always_forward: -4.96
     random: -2.88
