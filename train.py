@@ -58,7 +58,7 @@ def create_rail_env(env_params, observation_builder):
     y_dim = env_params.y_dim
     n_cities = env_params.n_cities
     max_rails_between_cities = env_params.max_rails_between_cities
-    max_rails_in_city = env_params.max_rails_in_city
+    max_rail_pairs_in_city = env_params.max_rail_pairs_in_city
     seed = env_params.seed
 
     # Break agents from time to time
@@ -74,7 +74,7 @@ def create_rail_env(env_params, observation_builder):
             max_num_cities=n_cities,
             grid_mode=False,
             max_rails_between_cities=max_rails_between_cities,
-            max_rail_pairs_in_city=max_rails_in_city
+            max_rail_pairs_in_city=max_rail_pairs_in_city
         ),
         line_generator=sparse_line_generator(),
         number_of_agents=n_agents,
@@ -466,7 +466,7 @@ if __name__ == "__main__":
             "y_dim": 25,
             "n_cities": 2,
             "max_rails_between_cities": 2,
-            "max_rails_in_city": 3,
+            "max_rail_pairs_in_city": 3,
             "malfunction_rate": 1 / 50,
             "seed": 0
         },
@@ -477,7 +477,7 @@ if __name__ == "__main__":
             "y_dim": 30,
             "n_cities": 2,
             "max_rails_between_cities": 2,
-            "max_rails_in_city": 3,
+            "max_rail_pairs_in_city": 3,
             "malfunction_rate": 1 / 100,
             "seed": 0
         },
@@ -488,7 +488,7 @@ if __name__ == "__main__":
             "y_dim": 30,
             "n_cities": 3,
             "max_rails_between_cities": 2,
-            "max_rails_in_city": 3,
+            "max_rail_pairs_in_city": 3,
             "malfunction_rate": 1 / 200,
             "seed": 0
         },
