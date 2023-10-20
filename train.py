@@ -12,7 +12,7 @@ import PIL
 import numpy as np
 import psutil
 import torch
-from flatland.envs.malfunction_generators import malfunction_from_params, MalfunctionParameters
+from flatland.envs.malfunction_generators import ParamMalfunctionGen, MalfunctionParameters
 from flatland.envs.observations import TreeObsForRailEnv
 from flatland.envs.predictions import ShortestPathPredictorForRailEnv
 from flatland.envs.rail_env import RailEnv, RailEnvActions
@@ -78,7 +78,7 @@ def create_rail_env(env_params, observation_builder):
         ),
         line_generator=sparse_line_generator(),
         number_of_agents=n_agents,
-        malfunction_generator_and_process_data=malfunction_from_params(malfunction_parameters),
+        malfunction_generator=ParamMalfunctionGen(malfunction_parameters),
         obs_builder_object=observation_builder,
         random_seed=seed
     )
