@@ -2,7 +2,8 @@ import copy
 import os
 import pickle
 import random
-from collections import namedtuple, deque, Iterable
+from collections.abc import Iterable
+from collections import namedtuple, deque
 
 import numpy as np
 import torch
