@@ -1,5 +1,6 @@
 import random
-from collections import namedtuple, deque, Iterable
+from collections.abc import Iterable
+from collections import namedtuple, deque
 import torch
 import numpy as np
 
