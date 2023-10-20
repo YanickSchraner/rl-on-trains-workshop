@@ -17,7 +17,7 @@ from flatland.envs.observations import TreeObsForRailEnv
 from flatland.envs.predictions import ShortestPathPredictorForRailEnv
 from flatland.envs.rail_env import RailEnv, RailEnvActions
 from flatland.envs.rail_generators import sparse_rail_generator
-from flatland.envs.schedule_generators import sparse_schedule_generator
+from flatland.envs.line_generators import sparse_line_generator
 from flatland.utils.rendertools import RenderTool
 from torch.utils.tensorboard import SummaryWriter
 
@@ -26,7 +26,6 @@ from torch.utils.tensorboard import SummaryWriter
 from utils.dddqn_policy import DDDQNPolicy
 from utils.timer import Timer
 from utils.observation_utils import normalize_observation
-from utils.fast_tree_obs import FastTreeObs
 from utils.dddqn_rnd_policy import DDDQNRNDPolicy
 from utils.test import FlatlandTester
 
@@ -89,9 +88,9 @@ def create_rail_env(env_params, observation_builder):
             max_num_cities=n_cities,
             grid_mode=False,
             max_rails_between_cities=max_rails_between_cities,
-            max_rails_in_city=max_rails_in_city
+            max_rail_pairs_in_city=max_rails_in_city
         ),
-        schedule_generator=sparse_schedule_generator(),
+        line_generator=sparse_line_generator(),
         number_of_agents=n_agents,
         malfunction_generator_and_process_data=malfunction_from_params(malfunction_parameters),
         obs_builder_object=observation_builder,
