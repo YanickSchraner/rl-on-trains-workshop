@@ -32,36 +32,22 @@ from utils.test import FlatlandTester
 
 def creat_observation_builder(obs_params):
     predictor = ShortestPathPredictorForRailEnv(obs_params.observation_max_path_depth)
-    if obs_params.use_fast_tree_observation:
-        print("\nUsing FastTreeObs")
+    print("\nUsing standard TreeObs")
 
-        def check_is_observation_valid(_):
-            return True
+    def check_is_observation_valid(observation):
+        return observation
 
-        def get_normalized_observation(observation):
-            return observation
+    def get_normalized_observation(observation):
+        return normalize_observation(observation, obs_params.observation_tree_depth, obs_params.observation_radius)
 
-        tree_observation = FastTreeObs(max_depth=obs_params.observation_tree_depth)
-        tree_observation.check_is_observation_valid = check_is_observation_valid
-        tree_observation.get_normalized_observation = get_normalized_observation
-        state_size = tree_observation.observation_dim
-    else:
-        print("\nUsing standard TreeObs")
+    tree_observation = TreeObsForRailEnv(max_depth=obs_params.observation_tree_depth, predictor=predictor)
+    tree_observation.check_is_observation_valid = check_is_observation_valid
+    tree_observation.get_normalized_observation = get_normalized_observation
 
-        def check_is_observation_valid(observation):
-            return observation
-
-        def get_normalized_observation(observation):
-            return normalize_observation(observation, obs_params.observation_tree_depth, obs_params.observation_radius)
-
-        tree_observation = TreeObsForRailEnv(max_depth=obs_params.observation_tree_depth, predictor=predictor)
-        tree_observation.check_is_observation_valid = check_is_observation_valid
-        tree_observation.get_normalized_observation = get_normalized_observation
-
-        # Calculate the state size given the depth of the tree observation and the number of features
-        n_features_per_node = tree_observation.observation_dim
-        n_nodes = sum([np.power(4, i) for i in range(obs_params.observation_tree_depth + 1)])
-        state_size = n_features_per_node * n_nodes
+    # Calculate the state size given the depth of the tree observation and the number of features
+    n_features_per_node = tree_observation.observation_dim
+    n_nodes = sum([np.power(4, i) for i in range(obs_params.observation_tree_depth + 1)])
+    state_size = n_features_per_node * n_nodes
 
     return tree_observation, state_size
 
@@ -467,7 +453,6 @@ if __name__ == "__main__":
     parser.add_argument("--num_threads", help="number of threads PyTorch can use", default=1, type=int)
     parser.add_argument("--render", help="render 1 episode in 100", default=False, action='store_true')
     parser.add_argument("--load_policy", help="policy filename (reference) to load", default="", type=str)
-    parser.add_argument("--use_fast_tree_observation", help="use FastTreeObs instead of stock TreeObs", action='store_true')
     parser.add_argument("--max_depth", help="max depth", default=2, type=int)
     parser.add_argument('--rnd_hidden_layers', nargs='+', default=[128, 128], type=int)
     parser.add_argument('--rnd_intrinsic_reward_weight', default=1.0, type=float)
@@ -510,7 +495,6 @@ if __name__ == "__main__":
     ]
 
     obs_params = {
-        "use_fast_tree_observation": training_params.use_fast_tree_observation,
         "observation_tree_depth": training_params.max_depth,
         "observation_radius": 10,
         "observation_max_path_depth": 30
