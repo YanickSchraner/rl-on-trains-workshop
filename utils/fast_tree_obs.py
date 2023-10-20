@@ -1,7 +1,7 @@
 import numpy as np
 from flatland.core.env_observation_builder import ObservationBuilder
 from flatland.core.grid.grid4_utils import get_new_position
-from flatland.envs.agent_utils import TrainState
+from flatland.envs.agent_utils import RailAgentStatus
 from flatland.envs.rail_env import fast_count_nonzero, fast_argmax
 
 """
@@ -216,9 +216,9 @@ class FastTreeObs(ObservationBuilder):
         # observation[1]  : 1 path towards target (direction 1) / otherwise 0 -> path is longer or there is no path
         # observation[2]  : 1 path towards target (direction 2) / otherwise 0 -> path is longer or there is no path
         # observation[3]  : 1 path towards target (direction 3) / otherwise 0 -> path is longer or there is no path
-        # observation[4]  : int(agent.state == RailAgentStatus.READY_TO_DEPART)
-        # observation[5]  : int(agent.state == RailAgentStatus.ACTIVE)
-        # observation[6]  : int(agent.state == RailAgentStatus.DONE or agent.state == RailAgentStatus.DONE_REMOVED)
+        # observation[4]  : int(agent.status == RailAgentStatus.READY_TO_DEPART)
+        # observation[5]  : int(agent.status == RailAgentStatus.ACTIVE)
+        # observation[6]  : int(agent.status == RailAgentStatus.DONE or agent.status == RailAgentStatus.DONE_REMOVED)
         # observation[7]  : current agent is located at a switch, where it can take a routing decision
         # observation[8]  : current agent is located at a cell, where it has to take a stop-or-go decision
         # observation[9]  : current agent is located one step before/after a switch
@@ -244,10 +244,10 @@ class FastTreeObs(ObservationBuilder):
         agent = self.env.agents[handle]
 
         agent_done = False
-        if agent.state == RailAgentStatus.READY_TO_DEPART:
+        if agent.status == RailAgentStatus.READY_TO_DEPART:
             agent_virtual_position = agent.initial_position
             observation[4] = 1
-        elif agent.state == RailAgentStatus.ACTIVE:
+        elif agent.status == RailAgentStatus.ACTIVE:
             agent_virtual_position = agent.position
             observation[5] = 1
         else:
