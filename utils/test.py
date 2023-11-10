@@ -53,10 +53,7 @@ class FlatlandTester:
             path = config['rail_generator']['specs_file']
             with open(path, 'r') as f:
                 specs = json.load(f)
-            rail_generator = sparse_rail_generator(specs
-                                                   grid_mode=False,
-                seed=0,
-                **config['rail_generator'])
+            rail_generator = sparse_rail_generator(**specs)
         else:
             rail_generator = sparse_rail_generator(
                 grid_mode=False,
