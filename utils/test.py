@@ -4,8 +4,13 @@ import numpy as np
 import json
 from PIL import Image
 
-from flatland.envs.rail_env import RailEnv
-from flatland.envs.rail_generators import sparse_rail_generator, rail_from_file, rail_from_manual_specifications_generator
+from flatland.envs.malfunction_generators import ParamMalfunctionGen, MalfunctionParameters
+from flatland.envs.observations import TreeObsForRailEnv
+from flatland.envs.predictions import ShortestPathPredictorForRailEnv
+from flatland.envs.rail_env import RailEnv, RailEnvActions
+from flatland.envs.rail_generators import sparse_rail_generator
+from flatland.envs.line_generators import sparse_line_generator
+
 from flatland.envs.observations import GlobalObsForRailEnv
 from flatland.utils.rendertools import RenderTool
 
@@ -48,7 +53,10 @@ class FlatlandTester:
             path = config['rail_generator']['specs_file']
             with open(path, 'r') as f:
                 specs = json.load(f)
-            rail_generator = rail_from_manual_specifications_generator(specs)
+            rail_generator = sparse_rail_generator(specs
+                                                   grid_mode=False,
+                seed=0,
+                **config['rail_generator'])
         else:
             rail_generator = sparse_rail_generator(
                 grid_mode=False,
