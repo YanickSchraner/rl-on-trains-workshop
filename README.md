@@ -1,3 +1,5 @@
+
+
 # Flatland: Multi-Agent Reinforcement Learning on Trains
 
 **🏫 AMLD 2021 in-person workshop on EPFL campus**
@@ -7,3 +9,5 @@
 🕘 09:00-17:00, September 29 @ 4A – STCC, EPFL Campus, Lausanne, Switzerland
 
 ![Flatland](assets/flatland.gif)
+
+Run `python train.py` to train an agent.
